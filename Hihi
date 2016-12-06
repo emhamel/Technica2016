@@ -1,0 +1,60 @@
+using UnityEngine;
+using System.Collections;
+
+public class hihi : MonoBehaviour {
+
+	// Use this for initialization
+	public float speed = 5.0f;
+	void Start () {
+	}
+
+	void OnCollisionEnter(Collision col)
+	{
+		if (col.gameObject.name == "Tree") {
+		}
+
+	}
+
+	// Update is called once per frame
+	void Update ()
+	{
+
+		bool getLeft = Input.GetKey (KeyCode.A);
+		bool getRIght = Input.GetKey (KeyCode.D);
+		bool getUp = Input.GetKey (KeyCode.W);
+		bool getDown = Input.GetKey (KeyCode.S);
+		bool getF = Input.GetKey (KeyCode.E);
+		bool getG = Input.GetKey (KeyCode.Q);
+		Vector3 currentPosition = transform.position;
+		if (getLeft) {
+			currentPosition.x -= speed * Time.deltaTime;
+		} else if (getRIght) {
+			currentPosition.x += speed * Time.deltaTime;
+		}
+		if (getUp) {
+			currentPosition.y += speed * Time.deltaTime;
+		} else if (getDown) {
+			currentPosition.y -= speed * Time.deltaTime;
+		}
+		if (getF) {
+			currentPosition.z += speed * Time.deltaTime;
+		} else if (getG) {
+			currentPosition.z -= speed * Time.deltaTime;
+		} 
+
+		//currentPosition.z += 0.05f;
+
+		transform.position = currentPosition;
+
+		var overlaps = Physics.OverlapSphere (transform.position, 0.25f, 7);
+		// use this for debugging
+		foreach (var overlap in overlaps) {
+			Debug.Log (overlap.name);
+
+		}
+		if (overlaps.Length > 0) {
+			print ("Game Over!");
+			Application.Quit();
+		}
+	}
+}
